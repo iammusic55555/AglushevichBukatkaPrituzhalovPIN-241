@@ -5,9 +5,11 @@ uv run --env-file .env --with 'nbformat>=5,<6' --with 'nbclient>=0.10,<1' \
 """
 
 import json
+import sys
 from pathlib import Path
 
 import nbformat
+from jupyter_client import KernelManager
 from nbclient import NotebookClient
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,10 +22,24 @@ def execute_once():
         if cell.cell_type == "code":
             cell.outputs = []
             cell.execution_count = None
+    # Глобальный kernelspec python3 может указывать на другой Python.
+    # Каждое ядро запускается интерпретатором текущего процесса.
+    manager = KernelManager(kernel_name="python3")
+    manager.kernel_spec.argv = [
+        sys.executable,
+        "-m",
+        "ipykernel_launcher",
+        "-f",
+        "{connection_file}",
+    ]
     client = NotebookClient(
-        notebook, timeout=300, kernel_name="python3", resources={"metadata": {"path": str(ROOT)}}
+        notebook, km=manager, timeout=300, resources={"metadata": {"path": str(ROOT)}}
     )
-    client.execute()
+    try:
+        client.execute()
+    finally:
+        if manager.has_kernel:
+            manager.shutdown_kernel(now=True)
     result = None
     for cell in notebook.cells:
         for output in cell.get("outputs", []):

@@ -1,0 +1,228 @@
+{
+  "execution": "fresh Jupyter kernels",
+  "runs": [
+    {
+      "critical_violations": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "execution_environment": "project S3",
+      "flag_mismatches": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "input": "s3://raw/airbnb_amsterdam_listings/ingested_on=2026-10-23/listings.csv.gz",
+      "output_prefix": "s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/",
+      "period": [
+        "2026-06-15",
+        "2026-06-24"
+      ],
+      "quarantine": 0,
+      "raw": 10369,
+      "raw_fingerprint": {
+        "bytes": 5759896,
+        "sha256": "e67b01d8b46e04f8ea85cd401dc6deeadef3b482fccf39e0388020d63c394062"
+      },
+      "rules": [
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "id_integrity",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "district_present",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "room_type_valid",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "flag",
+          "checked": 10369,
+          "criticality": "warning",
+          "exceeded": true,
+          "id": "price_present",
+          "share": 0.3849937313144951,
+          "threshold": 0,
+          "violations": 3992
+        },
+        {
+          "action": "flag",
+          "checked": 6377,
+          "criticality": "warning",
+          "exceeded": false,
+          "id": "price_valid",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "availability_valid",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "flag",
+          "checked": 10369,
+          "criticality": "warning",
+          "exceeded": true,
+          "id": "calendar_flag_valid",
+          "share": 0.01311601890249783,
+          "threshold": 0,
+          "violations": 136
+        },
+        {
+          "action": "flag",
+          "checked": 152,
+          "criticality": "warning",
+          "exceeded": true,
+          "id": "calendar_consistency",
+          "share": 0.993421052631579,
+          "threshold": 0,
+          "violations": 151
+        }
+      ],
+      "staging": 10369
+    },
+    {
+      "critical_violations": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "execution_environment": "project S3",
+      "flag_mismatches": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "input": "s3://raw/airbnb_amsterdam_listings/ingested_on=2026-10-23/listings.csv.gz",
+      "output_prefix": "s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/",
+      "period": [
+        "2026-06-15",
+        "2026-06-24"
+      ],
+      "quarantine": 0,
+      "raw": 10369,
+      "raw_fingerprint": {
+        "bytes": 5759896,
+        "sha256": "e67b01d8b46e04f8ea85cd401dc6deeadef3b482fccf39e0388020d63c394062"
+      },
+      "rules": [
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "id_integrity",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "district_present",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "room_type_valid",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "flag",
+          "checked": 10369,
+          "criticality": "warning",
+          "exceeded": true,
+          "id": "price_present",
+          "share": 0.3849937313144951,
+          "threshold": 0,
+          "violations": 3992
+        },
+        {
+          "action": "flag",
+          "checked": 6377,
+          "criticality": "warning",
+          "exceeded": false,
+          "id": "price_valid",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "quarantine",
+          "checked": 10369,
+          "criticality": "critical",
+          "exceeded": false,
+          "id": "availability_valid",
+          "share": 0.0,
+          "threshold": 0,
+          "violations": 0
+        },
+        {
+          "action": "flag",
+          "checked": 10369,
+          "criticality": "warning",
+          "exceeded": true,
+          "id": "calendar_flag_valid",
+          "share": 0.01311601890249783,
+          "threshold": 0,
+          "violations": 136
+        },
+        {
+          "action": "flag",
+          "checked": 152,
+          "criticality": "warning",
+          "exceeded": true,
+          "id": "calendar_consistency",
+          "share": 0.993421052631579,
+          "threshold": 0,
+          "violations": 151
+        }
+      ],
+      "staging": 10369
+    }
+  ],
+  "identical": true
+}

@@ -58,5 +58,6 @@ docker compose down
 - [Запуск на SeaweedFS](docs/RUN_LAB03.md)
 - [Описание и чек-лист PR](docs/PULL_REQUEST_lab03.md)
 
-Локальные доказательства в `docs/evidence/` получены на Git-снимке.
-Перед сдачей требуется выполнить основной ноутбук на SeaweedFS с двумя чистыми ядрами.
+Основной ноутбук проверен на SeaweedFS 4.48 в двух новых Jupyter-ядрах и сохранён
+с выводами. Подтверждения — `docs/evidence/two_runs_s3.json`, `airflow_seaweedfs.json`
+и `s3_objects.json`; локальная диагностика сохранена отдельно.

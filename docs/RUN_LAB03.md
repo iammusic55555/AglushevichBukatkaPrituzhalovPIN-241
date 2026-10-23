@@ -73,8 +73,10 @@ uv run ruff check .
 uv run python -m unittest discover -s tests -v
 ```
 
-После проверки на SeaweedFS обновите `docs/data_quality_report.md` и оставшиеся
-пункты `docs/PULL_REQUEST_lab03.md`. Оформите PR из `lab-03` в `main`.
+Проверка на SeaweedFS уже выполнена: DAG успешен, оба новых Jupyter-ядра дали
+10 369 строк staging и пустой карантин. Доказательства и актуальный отчёт сохранены.
+После изменений данных или правил повторите проверку и обновите отчёт.
+Оформите PR из `lab-03` в `main` с подготовленным описанием.
 
 Дополнительная диагностика без Docker/S3:
 
@@ -84,5 +86,6 @@ uv run python scripts/validate_local.py
 
 Она запускает SQL дважды в новых процессах Python на Git-снимке, сохраняет
 отдельный `docs/evidence/profile_quality_local.ipynb`, JSON с результатами
-и локальные Parquet. Основной ноутбук не изменяется. Эти результаты не заменяют
+и локальные Parquet (они заменяют копии в `docs/evidence/`, но не S3-объекты).
+Основной ноутбук не изменяется. Эти результаты не заменяют
 обязательные объекты SeaweedFS и два чистых Jupyter-ядра.

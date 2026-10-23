@@ -44,7 +44,7 @@ services:
       S3_BUCKET: raw,staging,mart
     ports:
       - "127.0.0.1:8333:8333"
-      - "127.0.0.1:8888:8888"
+      - "127.0.0.1:8890:8888"
     volumes:
       - seaweedfs-data:/data
     healthcheck:

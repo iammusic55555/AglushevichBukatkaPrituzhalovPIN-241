@@ -22,8 +22,9 @@ docker compose ps
 docker compose exec airflow-scheduler airflow dags list-import-errors
 ```
 
+Порт файлового интерфейса на компьютере — 8890, поскольку 8888 занят Jupyter.
 Дождитесь готовности сервисов. Airflow: http://localhost:8080/.
-SeaweedFS: http://localhost:8888/buckets/.
+SeaweedFS: http://localhost:8890/buckets/.
 
 ## 2. Исходный объект
 

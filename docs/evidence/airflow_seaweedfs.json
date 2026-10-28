@@ -1,0 +1,20 @@
+{
+  "dag_id": "ingest_raw",
+  "dag_run_id": "lab03-source-2026-10-23",
+  "logical_date": "2026-10-23T00:00:00+00:00",
+  "state": "success",
+  "tasks": [
+    {
+      "task_id": "load_to_raw",
+      "state": "success",
+      "start_date": "2026-10-23T12:08:28.442452+00:00",
+      "end_date": "2026-10-23T12:08:30.698263+00:00"
+    },
+    {
+      "task_id": "wait_for_primary_source",
+      "state": "success",
+      "start_date": "2026-10-23T12:08:26.342198+00:00",
+      "end_date": "2026-10-23T12:08:27.344151+00:00"
+    }
+  ]
+}

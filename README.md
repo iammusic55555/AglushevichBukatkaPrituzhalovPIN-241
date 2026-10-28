@@ -22,7 +22,7 @@ SeaweedFS работает в одном контейнере в режиме `w
 работу. Airflow webserver запускается после успешной проверки heartbeat scheduler. Отдельные init-сервисы не нужны.
 
 Используются стандартные порты SeaweedFS: S3 API доступен на `http://localhost:8333`, а файловый интерфейс — по адресу
-`http://localhost:8888/buckets/`; в нём видны бакеты и их объекты. На хосте используются `S3_ENDPOINT`,
+`http://localhost:8890/buckets/`; в нём видны бакеты и их объекты. На хосте используются `S3_ENDPOINT`,
 `S3_ACCESS_KEY` и `S3_SECRET_KEY` из `.env`, а Airflow получает подключение `s3_conn` с адресом
 `http://seaweedfs:8333` внутри сети Compose.
 
@@ -50,3 +50,14 @@ docker compose down
 - `scripts/` — кроссплатформенные точки входа для локальных проверок.
 - `dbt/` — dbt-модели, материализуемые во внешние Parquet-файлы SeaweedFS.
 - `infra/` — место для инфраструктурных материалов следующих лабораторных работ.
+
+## ЛР № 3
+
+- [Основной ноутбук](notebooks/profile_quality.ipynb)
+- [Отчёт о качестве](docs/data_quality_report.md)
+- [Запуск на SeaweedFS](docs/RUN_LAB03.md)
+- [Описание и чек-лист PR](docs/PULL_REQUEST_lab03.md)
+
+Основной ноутбук проверен на SeaweedFS 4.48 в двух новых Jupyter-ядрах и сохранён
+с выводами. Подтверждения — `docs/evidence/two_runs_s3.json`, `airflow_seaweedfs.json`
+и `s3_objects.json`; локальная диагностика сохранена отдельно.

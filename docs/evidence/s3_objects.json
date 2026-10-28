@@ -1,0 +1,21 @@
+{
+  "storage": "SeaweedFS 4.48",
+  "s3_endpoint": "http://127.0.0.1:8333",
+  "objects": [
+    {
+      "path": "s3://raw/airbnb_amsterdam_listings/ingested_on=2026-10-23/listings.csv.gz",
+      "bytes": 5759896,
+      "sha256": "e67b01d8b46e04f8ea85cd401dc6deeadef3b482fccf39e0388020d63c394062"
+    },
+    {
+      "path": "s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/staging.parquet",
+      "bytes": 289942,
+      "sha256": "150bf3e50aeceb48b09f0e602edf68f066cab269da69fabf1f535e9712636f8c"
+    },
+    {
+      "path": "s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/quarantine.parquet",
+      "bytes": 2548,
+      "sha256": "0cdb62e3788ee751144d2a82312409ab7f23eb345ce394d35ba09b2ee79eeced"
+    }
+  ]
+}

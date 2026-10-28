@@ -1,0 +1,228 @@
+{
+  "execution": "local Git snapshot; fresh Python processes; no S3",
+  "runs": [
+    {
+      "execution_environment": "local Git snapshot; fresh Python process; no S3",
+      "input": "data/source/listings.csv.gz",
+      "period": [
+        "2026-06-15",
+        "2026-06-24"
+      ],
+      "output_prefix": "docs/evidence/",
+      "raw": 10369,
+      "staging": 10369,
+      "quarantine": 0,
+      "raw_fingerprint": {
+        "bytes": 5759896,
+        "sha256": "e67b01d8b46e04f8ea85cd401dc6deeadef3b482fccf39e0388020d63c394062"
+      },
+      "critical_violations": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flag_mismatches": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rules": [
+        {
+          "id": "id_integrity",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "district_present",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "room_type_valid",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "price_present",
+          "checked": 10369,
+          "violations": 3992,
+          "share": 0.3849937313144951,
+          "threshold": 0,
+          "exceeded": true,
+          "criticality": "warning",
+          "action": "flag"
+        },
+        {
+          "id": "price_valid",
+          "checked": 6377,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "warning",
+          "action": "flag"
+        },
+        {
+          "id": "availability_valid",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "calendar_flag_valid",
+          "checked": 10369,
+          "violations": 136,
+          "share": 0.01311601890249783,
+          "threshold": 0,
+          "exceeded": true,
+          "criticality": "warning",
+          "action": "flag"
+        },
+        {
+          "id": "calendar_consistency",
+          "checked": 152,
+          "violations": 151,
+          "share": 0.993421052631579,
+          "threshold": 0,
+          "exceeded": true,
+          "criticality": "warning",
+          "action": "flag"
+        }
+      ]
+    },
+    {
+      "execution_environment": "local Git snapshot; fresh Python process; no S3",
+      "input": "data/source/listings.csv.gz",
+      "period": [
+        "2026-06-15",
+        "2026-06-24"
+      ],
+      "output_prefix": "docs/evidence/",
+      "raw": 10369,
+      "staging": 10369,
+      "quarantine": 0,
+      "raw_fingerprint": {
+        "bytes": 5759896,
+        "sha256": "e67b01d8b46e04f8ea85cd401dc6deeadef3b482fccf39e0388020d63c394062"
+      },
+      "critical_violations": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flag_mismatches": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rules": [
+        {
+          "id": "id_integrity",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "district_present",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "room_type_valid",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "price_present",
+          "checked": 10369,
+          "violations": 3992,
+          "share": 0.3849937313144951,
+          "threshold": 0,
+          "exceeded": true,
+          "criticality": "warning",
+          "action": "flag"
+        },
+        {
+          "id": "price_valid",
+          "checked": 6377,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "warning",
+          "action": "flag"
+        },
+        {
+          "id": "availability_valid",
+          "checked": 10369,
+          "violations": 0,
+          "share": 0.0,
+          "threshold": 0,
+          "exceeded": false,
+          "criticality": "critical",
+          "action": "quarantine"
+        },
+        {
+          "id": "calendar_flag_valid",
+          "checked": 10369,
+          "violations": 136,
+          "share": 0.01311601890249783,
+          "threshold": 0,
+          "exceeded": true,
+          "criticality": "warning",
+          "action": "flag"
+        },
+        {
+          "id": "calendar_consistency",
+          "checked": 152,
+          "violations": 151,
+          "share": 0.993421052631579,
+          "threshold": 0,
+          "exceeded": true,
+          "criticality": "warning",
+          "action": "flag"
+        }
+      ]
+    }
+  ],
+  "identical": true
+}

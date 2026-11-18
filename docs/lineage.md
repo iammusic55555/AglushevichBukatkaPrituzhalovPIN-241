@@ -20,7 +20,6 @@ De Baarsjes - Oud-West — **357,00 евро за ночь**.
 Объявления загружены по HTTP из файла
 [listings.csv.gz](https://data.insideairbnb.com/the-netherlands/north-holland/amsterdam/2026-06-15/data/listings.csv.gz)
 от Inside Airbnb. Загрузку в SeaweedFS выполнил DAG Airflow `ingest_raw`.
-Логическая дата загрузки — 23 октября 2026 года.
 
 | Исходные данные          | Путь в `raw`                                                                |
 | ------------------------ | --------------------------------------------------------------------------- |
@@ -70,8 +69,8 @@ flowchart TD
 
 От значения 357,00 евро можно пройти через SQL и витрину до исходных данных.
 
-1. В [calculate_metrics.ipynb](../notebooks/calculate_metrics.ipynb#intro)
-   в ячейке M06 найдите таблицу «Два района с наибольшим числом объявлений целого жилья».
+1. В `calculate_metrics.ipynb` в ячейке M06 найдите таблицу
+   «Два района с наибольшим числом объявлений целого жилья».
    В строке `De Baarsjes - Oud-West` / `Entire home/apt` столбец `median_price_eur`
    показывает `357.00`, `price_count` — `901`, `listings_count` — `1633`.
    Запрос для `segment_metrics` группирует `analysis_base` по `district` и

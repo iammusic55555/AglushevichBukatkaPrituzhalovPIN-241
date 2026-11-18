@@ -9,17 +9,18 @@
 
 ### Выбранное значение метрики
 
-Для разбора выбрана медианная заявленная цена целого жилья
-(`Entire home/apt`) в районе De Baarsjes - Oud-West — **357,00 евро за ночь**.
+Для разбора выбрана медианная заявленная цена целого жилья в районе
+De Baarsjes - Oud-West — **357,00 евро за ночь**.
 В этой группе **1 633 объявления**, из них **901 цена** вошла в расчет.
 Использован снимок Inside Airbnb от 15 июня 2026 года. Данные собирались
 15–24 июня 2026 года.
 
 ### Исходные данные
 
-[Inside Airbnb — Amsterdam Detailed Listings](https://data.insideairbnb.com/the-netherlands/north-holland/amsterdam/2026-06-15/data/listings.csv.gz).
-DAG Airflow `ingest_raw` проверяет доступность файла по HTTP и загружает сжатый CSV
-в SeaweedFS. Логическая дата загрузки — 23 октября 2026 года.
+Объявления загружены по HTTP из файла
+[listings.csv.gz](https://data.insideairbnb.com/the-netherlands/north-holland/amsterdam/2026-06-15/data/listings.csv.gz)
+от Inside Airbnb. Загрузку в SeaweedFS выполнил DAG Airflow `ingest_raw`.
+Логическая дата загрузки — 23 октября 2026 года.
 
 | Исходные данные          | Путь в `raw`                                                                |
 | ------------------------ | --------------------------------------------------------------------------- |
@@ -29,19 +30,17 @@ DAG Airflow `ingest_raw` проверяет доступность файла п
 
 ```mermaid
 flowchart TD
-    Source["Inside Airbnb (HTTP)<br/>listings.csv.gz"]
+    Source["Inside Airbnb (HTTP)<br/>listings.csv.gz<br/>10 369 строк"]
     Raw["raw<br/>listings.csv.gz<br/>10 369 строк"]
     Staging["staging<br/>staging.parquet<br/>10 369 строк"]
     Quarantine["staging (карантин)<br/>quarantine.parquet<br/>0 строк"]
     Mart["mart<br/>listings.parquet<br/>10 369 строк"]
 
-    subgraph Lab05["ЛР № 5: calculate_metrics.ipynb (временные таблицы DuckDB)"]
-        Base["M03: analysis_base<br/>10 369 строк"]
-        Overall["M04: overall_metrics<br/>1 строка"]
-        District["M05: district_metrics<br/>22 строки"]
-        Segments["M06: segment_metrics<br/>55 строк"]
-        Distribution["M06: distribution_values<br/>6 377 строк"]
-    end
+    Base["DuckDB (temp table)<br/>M03: analysis_base<br/>10 369 строк"]
+    Overall["DuckDB (temp table)<br/>M04: overall_metrics<br/>1 строка"]
+    District["DuckDB (temp table)<br/>M05: district_metrics<br/>22 строки"]
+    Segments["DuckDB (temp table)<br/>M06: segment_metrics<br/>55 строк"]
+    Distribution["DuckDB (temp table)<br/>M06: distribution_values<br/>6 377 строк"]
 
     Source -->|Загрузка по HTTP| Raw
     Raw -->|Очистка полей и добавление флагов| Staging
@@ -54,20 +53,22 @@ flowchart TD
     Base -->|Выбор отдельных пригодных цен| Distribution
 ```
 
-| Переход                      | Реализация и проверки                                                                                                                                                                                                                                                                                                                                             |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Источник → `raw`             | В [ingest_raw.py](../airflow/dags/ingest_raw.py) задача `wait_for_primary_source` проверяет URL, а `load_to_raw` сохраняет файл. Обе задачи завершились успешно, см. [результат DAG](evidence/airflow_seaweedfs.json).                                                                                                                                            |
-| `raw` → `staging` и карантин | В [profile_quality.ipynb](../notebooks/profile_quality.ipynb) проверяются ключ `id`, категории, цены и календарь. Пропуски цены помечаются флагом. В [отчете о качестве](data_quality_report.md#4-подготовленные-данные) зафиксирован баланс: 10 369 исходных строк, 10 369 в `staging`, 0 в карантине.                                                           |
-| `staging` → `mart`           | В [build_mart.ipynb](../notebooks/build_mart.ipynb#checks) выбираются поля, район переименовывается в `district`, даты приводятся к `DATE`. Соединений таблиц нет. После записи проверено, что все 10 369 строк перенесены, а `id` заполнен и уникален.                                                                                                           |
-| `mart` → результаты          | В [calculate_metrics.ipynb](../notebooks/calculate_metrics.ipynb#intro) M03 читает весь снимок и выделяет пригодные цены и календарные значения. M04–M06 считают итоги и готовят выборку. В [M07](../notebooks/calculate_metrics.ipynb#validation) пройдены шесть проверок, включая сверку количества объявлений, числа пригодных значений и суммы долей районов. |
+| Переход                                   | Реализация и проверки                                                                                                                                                                                                                                                                                                                                             |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Источник --> `raw`                        | В [ingest_raw.py](../airflow/dags/ingest_raw.py) задача `wait_for_primary_source` проверяет URL, а `load_to_raw` сохраняет файл. Обе задачи завершились успешно, см. [результат DAG](evidence/airflow_seaweedfs.json).                                                                                                                                            |
+| `raw` --> `staging` и `quarantine`        | В [profile_quality.ipynb](../notebooks/profile_quality.ipynb) проверяются ключ `id`, категории, цены и календарь. Пропуски цены помечаются флагом. В [отчете о качестве](data_quality_report.md#4-подготовленные-данные) зафиксирован баланс: 10 369 исходных строк, 10 369 в `staging`, 0 в карантине.                                                           |
+| `staging` --> `mart`                      | В [build_mart.ipynb](../notebooks/build_mart.ipynb#checks) выбираются поля, район переименовывается в `district`, даты приводятся к `DATE`. Соединений таблиц нет. После записи проверено, что все 10 369 строк перенесены, а `id` заполнен и уникален.                                                                                                           |
+| `mart` --> `analysis_base` --> результаты | В [calculate_metrics.ipynb](../notebooks/calculate_metrics.ipynb#intro) M03 читает весь снимок и выделяет пригодные цены и календарные значения. M04–M06 считают итоги и готовят выборку. В [M07](../notebooks/calculate_metrics.ipynb#validation) пройдены шесть проверок, включая сверку количества объявлений, числа пригодных значений и суммы долей районов. |
 
-| Датасет   | Путь                                                                                      |
-| --------- | ----------------------------------------------------------------------------------------- |
-| `staging` | `s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/staging.parquet`    |
-| Карантин  | `s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/quarantine.parquet` |
-| `mart`    | `s3://mart/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/listings.parquet`      |
+| Датасет      | Путь                                                                                      |
+| ------------ | ----------------------------------------------------------------------------------------- |
+| `staging`    | `s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/staging.parquet`    |
+| `quarantine` | `s3://staging/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/quarantine.parquet` |
+| `mart`       | `s3://mart/airbnb_amsterdam_listings/source_ingested_on=2026-10-23/listings.parquet`      |
 
 ## Маршрут данных для выбранного значения метрики
+
+От значения 357,00 евро можно пройти через SQL и витрину до исходных данных.
 
 1. В [calculate_metrics.ipynb](../notebooks/calculate_metrics.ipynb#intro)
    в ячейке M06 найдите таблицу «Два района с наибольшим числом объявлений целого жилья».
@@ -83,10 +84,9 @@ flowchart TD
    случаях поле получает `NULL`. Такие объявления учитываются в `listings_count`,
    а `median` и `count(valid_price_eur)` пропускают их цены. В выбранной группе
    это 732 объявления.
-3. [Ноутбук ЛР № 4](../notebooks/build_mart.ipynb) собирает витрину из `staging.parquet`.
-   Название района получает имя `district`, тип жилья, цену и флаги переносят
-   без изменений. В [ЛР № 3](../notebooks/profile_quality.ipynb) эти поля получены
-   из CSV в слое `raw`. У района и типа жилья убирают крайние пробелы, а у цены —
+3. В `build_mart.ipynb` витрину собирают из `staging.parquet`. Название района
+   получает имя `district`, тип жилья, цену и флаги переносят без изменений.
+   В `profile_quality.ipynb` эти поля получают из CSV в слое `raw`. У района и типа жилья убирают крайние пробелы, а у цены —
    знак валюты и запятые. Пригодные цены переводят в `DECIMAL(14,2)`. Пропуск
    и некорректную цену отмечают двумя отдельными флагами.
 
@@ -101,8 +101,8 @@ flowchart TD
 | `flag_price_missing` | Признак пропуска цены, `BOOLEAN`               | В `staging` вычисляется из `raw.price`, переносится в витрину. Флаг равен `true` при пустой или отсутствующей цене. Используется в условии отбора M03.                                                         |
 | `flag_price_invalid` | Признак некорректной цены, `BOOLEAN`           | В `staging` вычисляется из того же `raw.price`, переносится в витрину. Флаг отмечает непустую цену, которая не прошла проверку формата, преобразования или положительности. Используется в условии отбора M03. |
 
-Полный маппинг полей — в разделе [«Сопоставление полей»](mart.md#2-сопоставление-полей).
-Определения остальных метрик — в [metrics.md](metrics.md#метрики-и-окно).
+Сведения обо всех полях витрины собраны в разделе «Сопоставление полей» файла
+`mart.md`. Определения остальных метрик приведены в `metrics.md`.
 
 ## Влияние изменения нижней границы цены
 
